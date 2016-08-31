@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Alytalo_MVC.Models.Valot>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Valot</h2>
+
+<p>
+    @Html.ActionLink("Luo uusi", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Valaisin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValonTila)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValonMaara)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Huoneet.Huone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valaisin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValonTila)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValonMaara)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Huoneet.Huone)
+        </td>
+        <td>
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.Valo_id }) |
+            @Html.ActionLink("Tiedot", "Details", new { id=item.Valo_id }) |
+            @Html.ActionLink("Poista", "Delete", new { id=item.Valo_id })
+        </td>
+    </tr>
+}
+
+</table>

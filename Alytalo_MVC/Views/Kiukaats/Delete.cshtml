@@ -1,0 +1,56 @@
+﻿@model Alytalo_MVC.Models.Kiukaat
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Poisto</h2>
+
+<h3>Haluatko varmasti poistaa kiukaan?</h3>
+<div>
+    <h4>Kiukaat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KiukaanTila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KiukaanTila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NykyLampotila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NykyLampotila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TavoiteLampotila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TavoiteLampotila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Huoneet.Huone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huoneet.Huone)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poisto" class="btn btn-default" /> |
+            @Html.ActionLink("Takaisin kiukaisiin", "Index")
+        </div>
+    }
+</div>

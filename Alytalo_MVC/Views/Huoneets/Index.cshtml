@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Alytalo_MVC.Models.Huoneet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".näytäValotNappi").click(function () {
+                //alert("Nappia painettu!");
+                var huoneId = $(this).data("huoneid");
+                //var p1 = $(this).parent();
+                //var num = 1;
+                //alert(huoneId);
+                //$(this).parent().parent().parent().next().css("display", "block");
+                $("#valot_"+huoneId).css("display", "block");
+                //$("#valot_").css("display", "block");
+                var url = "/huoneets/haevalot/" + huoneId;
+                //var url = "/huone/haevalot/" + num;
+                $.ajax(url).done(function (data) {
+                    //alert("Palvelimelta tuli vastaus.");
+
+                    var valoData = "";
+                    var rivinvaihto = "\r\n";
+
+                    for (var i = 0; i < data.length; i++) {
+                        //alert(i + ": " + data[i].Valo_id);
+                        //valoData += (i+1) + ": " + data[i].Valo_id + " -> " + data[i].huoneId + " -> " + data[i].Valaisin;
+                        valoData += (i + 1) + ": " + data[i].Valo_id + " -> " + data[i].Valaisin+rivinvaihto;
+
+                    }
+                    $("#valotTeksti_" + huoneId).text(valoData);
+                });
+            });
+        });
+
+    </script>
+}
+<h2>Huoneet</h2>
+
+<p>
+    @Html.ActionLink("Luo uusi huone", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Huone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="#"><span data-huoneid="@Html.DisplayFor(modelItem => item.Huone_id)" class="glyphicon glyphicon-star-empty näytäValotNappi"></span></a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Huone)
+        </td>
+        <td>
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.Huone_id }) |
+            @Html.ActionLink("Tiedot", "Details", new { id=item.Huone_id }) |
+            @Html.ActionLink("Poista", "Delete", new { id=item.Huone_id })
+        </td>
+    </tr>
+    <tr style="display: none;" id="valot_@Html.DisplayFor(modelItem => item.Huone_id)">
+        <td>&nbsp;</td>
+        <td colspan="5" id="valotTeksti_@Html.DisplayFor(modelItem => item.Huone_id)"><pre>Lataa...</pre></td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,50 @@
+﻿@model Alytalo_MVC.Models.Kiukaat
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Tiedot</h2>
+
+<div>
+    <h4>Kiukaat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KiukaanTila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KiukaanTila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NykyLampotila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NykyLampotila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TavoiteLampotila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TavoiteLampotila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Huoneet.Huone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huoneet.Huone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muokkaa", "Edit", new { id = Model.Kiuas_id }) |
+    @Html.ActionLink("Takaisin kiukaisiin", "Index")
+</p>

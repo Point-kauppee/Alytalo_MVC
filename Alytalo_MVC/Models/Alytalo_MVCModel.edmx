@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MVC_Alytalo_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Huoneet">
+          <Key>
+            <PropertyRef Name="Huone_id" />
+          </Key>
+          <Property Name="Huone_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Huone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kiukaat">
+          <Key>
+            <PropertyRef Name="Kiuas_id" />
+          </Key>
+          <Property Name="Kiuas_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Huone" Type="int" Nullable="false" />
+          <Property Name="KiukaanTila" Type="nvarchar" MaxLength="50" />
+          <Property Name="NykyLampotila" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="TavoiteLampotila" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Lampotilat">
+          <Key>
+            <PropertyRef Name="Lampotila_id" />
+          </Key>
+          <Property Name="Lampotila_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Huone" Type="int" Nullable="false" />
+          <Property Name="NykyLampotila" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="TavoiteLampotila" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Valot">
+          <Key>
+            <PropertyRef Name="Valo_id" />
+          </Key>
+          <Property Name="Valo_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Huone" Type="int" Nullable="false" />
+          <Property Name="Valaisin" Type="varchar" MaxLength="50" />
+          <Property Name="ValonTila" Type="varchar" MaxLength="50" />
+          <Property Name="ValonMaara" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Kiukaat_Huoneet">
+          <End Role="Huoneet" Type="Self.Huoneet" Multiplicity="1" />
+          <End Role="Kiukaat" Type="Self.Kiukaat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Kiukaat">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lampotilat_Huoneet">
+          <End Role="Huoneet" Type="Self.Huoneet" Multiplicity="1" />
+          <End Role="Lampotilat" Type="Self.Lampotilat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Lampotilat">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valot_Huoneet">
+          <End Role="Huoneet" Type="Self.Huoneet" Multiplicity="1" />
+          <End Role="Valot" Type="Self.Valot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Valot">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVC_Alytalo_dbModelStoreContainer">
+          <EntitySet Name="Huoneet" EntityType="Self.Huoneet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kiukaat" EntityType="Self.Kiukaat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lampotilat" EntityType="Self.Lampotilat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Valot" EntityType="Self.Valot" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kiukaat_Huoneet" Association="Self.FK_Kiukaat_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Kiukaat" EntitySet="Kiukaat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lampotilat_Huoneet" Association="Self.FK_Lampotilat_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Lampotilat" EntitySet="Lampotilat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valot_Huoneet" Association="Self.FK_Valot_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Valot" EntitySet="Valot" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVC_Alytalo_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Huoneet">
+          <Key>
+            <PropertyRef Name="Huone_id" />
+          </Key>
+          <Property Name="Huone_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Huone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kiukaat" Relationship="Self.FK_Kiukaat_Huoneet" FromRole="Huoneet" ToRole="Kiukaat" />
+          <NavigationProperty Name="Valot" Relationship="Self.FK_Valot_Huoneet" FromRole="Huoneet" ToRole="Valot" />
+          <NavigationProperty Name="Lampotilat" Relationship="MVC_Alytalo_dbModel.FK_Lampotilat_Huoneet" FromRole="Huoneet" ToRole="Lampotilat" />
+        </EntityType>
+        <EntityType Name="Kiukaat">
+          <Key>
+            <PropertyRef Name="Kiuas_id" />
+          </Key>
+          <Property Name="Kiuas_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Huone" Type="Int32" Nullable="false" />
+          <Property Name="KiukaanTila" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NykyLampotila" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TavoiteLampotila" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Huoneet" Relationship="Self.FK_Kiukaat_Huoneet" FromRole="Kiukaat" ToRole="Huoneet" />
+        </EntityType>
+        <EntityType Name="Lampotilat">
+          <Key>
+            <PropertyRef Name="Lampotila_id" />
+          </Key>
+          <Property Name="Lampotila_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Huone" Type="Int32" Nullable="false" />
+          <Property Name="NykyLampotila" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TavoiteLampotila" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Huoneet" Relationship="MVC_Alytalo_dbModel.FK_Lampotilat_Huoneet" FromRole="Lampotilat" ToRole="Huoneet" />
+        </EntityType>
+        <EntityType Name="Valot">
+          <Key>
+            <PropertyRef Name="Valo_id" />
+          </Key>
+          <Property Name="Valo_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Huone" Type="Int32" Nullable="false" />
+          <Property Name="Valaisin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValonTila" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValonMaara" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Huoneet" Relationship="Self.FK_Valot_Huoneet" FromRole="Valot" ToRole="Huoneet" />
+        </EntityType>
+        <Association Name="FK_Kiukaat_Huoneet">
+          <End Role="Huoneet" Type="Self.Huoneet" Multiplicity="1" />
+          <End Role="Kiukaat" Type="Self.Kiukaat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Kiukaat">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valot_Huoneet">
+          <End Role="Huoneet" Type="Self.Huoneet" Multiplicity="1" />
+          <End Role="Valot" Type="Self.Valot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Valot">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVC_Alytalo_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Huoneet" EntityType="Self.Huoneet" />
+          <EntitySet Name="Kiukaat" EntityType="Self.Kiukaat" />
+          <EntitySet Name="Lampotilat" EntityType="Self.Lampotilat" />
+          <EntitySet Name="Valot" EntityType="Self.Valot" />
+          <AssociationSet Name="FK_Kiukaat_Huoneet" Association="Self.FK_Kiukaat_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Kiukaat" EntitySet="Kiukaat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valot_Huoneet" Association="Self.FK_Valot_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Valot" EntitySet="Valot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lampotilat_Huoneet" Association="MVC_Alytalo_dbModel.FK_Lampotilat_Huoneet">
+            <End Role="Huoneet" EntitySet="Huoneet" />
+            <End Role="Lampotilat" EntitySet="Lampotilat" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Lampotilat_Huoneet">
+          <End Type="MVC_Alytalo_dbModel.Huoneet" Role="Huoneet" Multiplicity="1" />
+          <End Type="MVC_Alytalo_dbModel.Lampotilat" Role="Lampotilat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Huoneet">
+              <PropertyRef Name="Huone_id" />
+            </Principal>
+            <Dependent Role="Lampotilat">
+              <PropertyRef Name="Huone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVC_Alytalo_dbModelStoreContainer" CdmEntityContainer="MVC_Alytalo_dbEntities">
+          <EntitySetMapping Name="Huoneet">
+            <EntityTypeMapping TypeName="MVC_Alytalo_dbModel.Huoneet">
+              <MappingFragment StoreEntitySet="Huoneet">
+                <ScalarProperty Name="Huone_id" ColumnName="Huone_id" />
+                <ScalarProperty Name="Huone" ColumnName="Huone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kiukaat">
+            <EntityTypeMapping TypeName="MVC_Alytalo_dbModel.Kiukaat">
+              <MappingFragment StoreEntitySet="Kiukaat">
+                <ScalarProperty Name="Kiuas_id" ColumnName="Kiuas_id" />
+                <ScalarProperty Name="Huone" ColumnName="Huone" />
+                <ScalarProperty Name="KiukaanTila" ColumnName="KiukaanTila" />
+                <ScalarProperty Name="NykyLampotila" ColumnName="NykyLampotila" />
+                <ScalarProperty Name="TavoiteLampotila" ColumnName="TavoiteLampotila" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lampotilat">
+            <EntityTypeMapping TypeName="MVC_Alytalo_dbModel.Lampotilat">
+              <MappingFragment StoreEntitySet="Lampotilat">
+                <ScalarProperty Name="Lampotila_id" ColumnName="Lampotila_id" />
+                <ScalarProperty Name="Huone" ColumnName="Huone" />
+                <ScalarProperty Name="NykyLampotila" ColumnName="NykyLampotila" />
+                <ScalarProperty Name="TavoiteLampotila" ColumnName="TavoiteLampotila" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Valot">
+            <EntityTypeMapping TypeName="MVC_Alytalo_dbModel.Valot">
+              <MappingFragment StoreEntitySet="Valot">
+                <ScalarProperty Name="Valo_id" ColumnName="Valo_id" />
+                <ScalarProperty Name="Huone" ColumnName="Huone" />
+                <ScalarProperty Name="Valaisin" ColumnName="Valaisin" />
+                <ScalarProperty Name="ValonTila" ColumnName="ValonTila" />
+                <ScalarProperty Name="ValonMaara" ColumnName="ValonMaara" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,56 @@
+﻿@model Alytalo_MVC.Models.Valot
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Poisto</h2>
+
+<h3>Haluatko varmasti poistaa valon?</h3>
+<div>
+    <h4>Valot</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Valaisin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valaisin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValonTila)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValonTila)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValonMaara)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValonMaara)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Huoneet.Huone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huoneet.Huone)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poisto" class="btn btn-default" /> |
+            @Html.ActionLink("Takaisin valoihin", "Index")
+        </div>
+    }
+</div>

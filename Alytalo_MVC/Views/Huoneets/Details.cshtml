@@ -1,0 +1,26 @@
+﻿@model Alytalo_MVC.Models.Huoneet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Tiedot</h2>
+
+<div>
+    <h4>Huoneet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Huone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muokkaa", "Edit", new { id = Model.Huone_id }) |
+    @Html.ActionLink("Takaisin huoneisiin", "Index")
+</p>

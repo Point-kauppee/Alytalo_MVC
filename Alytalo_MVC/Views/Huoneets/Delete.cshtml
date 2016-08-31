@@ -1,0 +1,32 @@
+﻿@model Alytalo_MVC.Models.Huoneet
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Poisto</h2>
+
+<h3>Haluatko varmasti poistaa huoneen?</h3>
+<div>
+    <h4>Huoneet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Huone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huone)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poisto" class="btn btn-default" /> |
+            @Html.ActionLink("Takaisin huoneisiin", "Index")
+        </div>
+    }
+</div>
