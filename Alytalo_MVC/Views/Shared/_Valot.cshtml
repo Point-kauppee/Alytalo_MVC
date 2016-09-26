@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Alytalo_MVC.Models.Valot>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Valaisin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValonTila)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValonMaara)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Huoneet.Huone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valaisin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValonTila)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValonMaara)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Huoneet.Huone)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Valo_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Valo_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Valo_id })
+        </td>*@
+    </tr>
+}
+
+</table>

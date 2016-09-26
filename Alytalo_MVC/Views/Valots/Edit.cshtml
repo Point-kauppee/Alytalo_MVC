@@ -3,64 +3,210 @@
 @{
     ViewBag.Title = "Edit";
 }
+<script src="~/Scripts/jquery-3.1.0.min.js" type="text/javascript"> </script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function tallennaKantaan() {
+        alert("Painettu");
+        url = "Valots/Tallenna/?Valo_id=" + 4 + "&ValonTila=" + 1;
+        alert(url);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { Valo_id: Valo_id },
+            datatype: "html",
+            cache: false,
+            success: $("tallennaKantaan").click(function (data) {
+                $('#result').html(data)
+            })
+            //}).done(function (data) {
+        });
+    }
+    @*$('#TallennaKantaan').click(function () {
+        document.location = '@Url.Action("Tallenna","Valots")';
+    });*@
+    function tila() {
+
+                        alert("jotain löytyy");
+
+        //alert(tulos);
+    }
+
+    $(function () {
+
+        $("#muutaTila").click(function () {
+            var tulos2 = document.getElementById("TilaEdit").Value;
+            alert(tulos2);
+            //if (data == 1){
+            //    $("Tila").text(1)
+            //    alert(data)
+            //}
+            //else {
+            //    $("Tila").text(0)
+        });
+    });
+
+    function naytaTila(str)
+    {
+        alert(str);
+        var xhttp;
+        //var kentta=document.getElementById("TilaEdit");
+        var kentta = document.getElementById("valo");
+        var label = document.getElementById("tilalabel");
+        var tilaed = document.getElementById("tilaedit");
+        //var val = model.ValonTila;
+        if (str == "")
+        {
+            //document.getElementById("valinta").inneHTML = "";
+            return;
+            //kentta.value = val;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            //if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4) {
+                kentta.style = "block";
+                label.style = "block";
+                kentta.value = str;
+                tilaed.value = str;
+                tilaed.className = "hidden";
+            }
+        };
+        xhttp.open("GET", "Valots/Edit?q=" + str, true);
+        xhttp.send();
+    }
+
+    function saadaKirkkaus(kirk)
+    {
+        alert(kirk);
+        var xh;
+        var kentta2 = document.getElementById("valonmaara");
+        var label = document.getElementById("maaralabel");
+        var valonmaaraed = document.getElementById("valonmaaraeditor");
+        if (kirk == "")
+        {
+            //document.getElementById("valinta").inneHTML = "";
+            return;
+            //kentta2.value = DataView.Value;
+        }
+        xh = new XMLHttpRequest();
+        xh.onreadystatechange = function () {
+            if (this.readyState == 2) {
+                kentta2.style = "block";
+                label.style = "block";
+                kentta2.value = kirk;
+                valonmaaraed.value = kirk;
+                valonmaaraed.className = "hidden";
+            }
+        };
+        xh.open("GET", "Valots/Edit?q=" + kirk, true);
+        xh.send();
+    }
+</script>
 
 <h2>Muokkaa</h2>
+@*<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+</style>*@
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Valot</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Valo_id)
+    @using (Html.BeginForm())
+    {
+        @*<div id="valinta">Valon tila näkyy tässä...</div>*@
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group-lg">
+                <form action="">
+                    <select name="tila" onchange="naytaTila(this.value)">
+                        <option value="">Valon tila:</option>
+                        <option value='0'>Pois päältä</option>
+                        <option value='1'>Päälle</option>
+                    </select>
+                </form>
+                <br />
+                <form action="">
+                    <select name="kirkkaus" onchange="saadaKirkkaus(this.value)">
+                        <option value="">Valon kirkkaus:</option>
+                        <option value='0'>Pois päältä</option>
+                        <option value='33'>Himmeä</option>
+                        <option value='50'>Puolivalot</option>
+                        <option value='75'>Puolikirkas</option>
+                        <option value='100'>Täysvalo</option>
+                    </select>
+                </form>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Huone, "Huone", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Huone, "", new { @class = "text-danger" })
+            </div>
+            <input type="submit" value="Tallenna" class="btn btn-default" />
+            <h4>Valot</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Valo_id)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Huone, "Huone", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Huone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Valaisin, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Valaisin, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Valaisin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ValonTila, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ValonTila, htmlAttributes: 0)*@
+                <div class="col-md-10">
+                    @*<button class="btn-success">Valo päälle</button>*@
+                    @* <button type="button" onclick="tallennaKantaan()"> Muuta valon tila </button>*@
+                    @*<valo id="Valaisin" controls></valo>*@
+                    <b id="tilalabel" style="display:none"> Uusi tila:  </b> <br>
+                    @*@Html.TextBox("muutaTila", '1' , new { id = "muutaTila" })*@
+                    @*@Html.TextBoxFor(x => x.ValonTila, new { @Value = "1"})*@
+                    @Html.TextBoxFor(model => model.ValonTila, new { @id = "valo", @style = "display: none" })
+                    @* <input type="submit" value="Päälle" id="Tila"/>*@
+                    @*             <button type="button" onclick="tila()">Testi</button>*@
+                    @* @Html.EditorFor(model => model.ValonTila, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.EditorFor(model => model.ValonTila, new { htmlAttributes = new { @class = "form-control", @id = "tilaedit" } })
+                    @*@Html.EditorFor(model => model.ValonTila, new { htmlAttributes = 0 })*@
+                    @Html.ValidationMessageFor(model => model.ValonTila, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ValonMaara, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.TextBoxFor(y => y.ValonMaara, new { @Value = "0", @id = "valonmaara" })*@
+                    <b id="maaralabel" style="display:none">Uusi määrä:</b> <br>
+                    @Html.TextBoxFor(model => model.ValonMaara, new { @id = "valonmaara", @style = "display: none" })
+                    @Html.EditorFor(model => model.ValonMaara, new { htmlAttributes = new { @class = "form-control", @id = "valonmaaraeditor" } })
+                    @Html.ValidationMessageFor(model => model.ValonMaara, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Tallenna" class="btn btn-default" />
+                </div>
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Valaisin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Valaisin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Valaisin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ValonTila, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ValonTila, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ValonTila, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ValonMaara, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ValonMaara, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ValonMaara, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Tallenna" class="btn btn-default" />
-            </div>
-        </div>
+    <div>
+        @Html.ActionLink("Takaisin valoihin", "Index")
     </div>
-}
 
-<div>
-    @Html.ActionLink("Takaisin valoihin", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

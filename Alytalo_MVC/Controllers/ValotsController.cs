@@ -43,6 +43,17 @@ namespace Alytalo_MVC.Controllers
             return View();
         }
 
+        public ActionResult Tallenna(int? Valo_id,  string ValonTila)
+        {
+            using (var db = new MVC_Alytalo_dbEntities())
+            {
+                var valaisin = db.Valot.First(c => c.Valo_id == Valo_id);
+                valaisin.ValonTila = ValonTila;
+                db.SaveChanges();
+            }
+            return new EmptyResult();
+            //return View(ValonTila);
+        }
         // POST: Valots/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

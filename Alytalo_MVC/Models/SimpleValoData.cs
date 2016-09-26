@@ -11,5 +11,9 @@ namespace Alytalo_MVC.Models
         public int Valo_id { get; set; }
         public int Huone { get; set; }
         public string Valaisin { get; set; }
+        public string ValonTila { get; set; }
+        public string ValonMaara { get; set; }
+
+
     }
 }

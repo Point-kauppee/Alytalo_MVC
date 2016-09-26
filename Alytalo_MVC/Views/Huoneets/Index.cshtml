@@ -15,23 +15,40 @@
                 //var num = 1;
                 //alert(huoneId);
                 //$(this).parent().parent().parent().next().css("display", "block");
-                $("#valot_"+huoneId).css("display", "block");
+                $("#valot_" + huoneId).css("display", "block");
+                $("#lammot_" + huoneId).css("display", "block");
                 //$("#valot_").css("display", "block");
                 var url = "/huoneets/haevalot/" + huoneId;
-                //var url = "/huone/haevalot/" + num;
+                var url2 = "/huoneets/haelammot/" + huoneId;
+                //var url3 = "/huoneets/HaePaallaValot/" + huoneId;
                 $.ajax(url).done(function (data) {
                     //alert("Palvelimelta tuli vastaus.");
 
                     var valoData = "";
+                    var rivinvaihto = '<br/>';
+
+                    for (var i = 0; i < data.length; i++) {
+                        //alert(i + ": " + data[i].Valo_id);
+                        //valoData += (i+1) + ": " + data[i].Valo_id + " -> " + data[i].huoneId + " -> " + data[i].Valaisin;
+                        valoData += " Valot  " + (i + 1) + ":  |" + data[i].Valo_id + " ->  |" + data[i].Valaisin + " | Tila: " + data[i].ValonTila + " | Määrä: " + data[i].ValonMaara ;
+                        //document.write(rivinvaihto);
+                    }
+                    $("#valotTeksti_" + huoneId).text(valoData);
+                    //$(document.write('<br/'));
+                });
+                $.ajax(url2).done(function (data) {
+                    //alert("Palvelimelta tuli vastaus.");
+
+                    var lampoData = "";
                     var rivinvaihto = "\r\n";
 
                     for (var i = 0; i < data.length; i++) {
                         //alert(i + ": " + data[i].Valo_id);
                         //valoData += (i+1) + ": " + data[i].Valo_id + " -> " + data[i].huoneId + " -> " + data[i].Valaisin;
-                        valoData += (i + 1) + ": " + data[i].Valo_id + " -> " + data[i].Valaisin+rivinvaihto;
-
+                        lampoData += " Lämmöt  " + (i + 1) + ":  | id " + data[i].Lampotila_id + " ->  | huone " + data[i].Huone + " | nyk. " + data[i].NykyLampotila + " | tav. " + data[i].TavoiteLampotila + " | " + "\r\n";
+                        //lampoData += "Lämmöt  " + (i + 1) + ":  |" + data[i].Lampotila_id + " ->  |" + rivinvaihto;
                     }
-                    $("#valotTeksti_" + huoneId).text(valoData);
+                    $("#lammotTeksti_" + huoneId).text(lampoData);
                 });
             });
         });
@@ -60,6 +77,7 @@
             @Html.DisplayFor(modelItem => item.Huone)
         </td>
         <td>
+         @*   @Html.ActionLink("Muokkaa valoja", "~/valots/Index", new { id = item.Huone_id })*@
             @Html.ActionLink("Muokkaa", "Edit", new { id=item.Huone_id }) |
             @Html.ActionLink("Tiedot", "Details", new { id=item.Huone_id }) |
             @Html.ActionLink("Poista", "Delete", new { id=item.Huone_id })
@@ -67,7 +85,11 @@
     </tr>
     <tr style="display: none;" id="valot_@Html.DisplayFor(modelItem => item.Huone_id)">
         <td>&nbsp;</td>
-        <td colspan="5" id="valotTeksti_@Html.DisplayFor(modelItem => item.Huone_id)"><pre>Lataa...</pre></td>
+        <td colspan="5" id="valotTeksti_@Html.DisplayFor(modelItem => item.Huone_id)"><pre>Lataa...<br></pre></td>
+    </tr>
+    <tr style="display: none;" id="lammot_@Html.DisplayFor(modelItem => item.Huone_id)">
+        <td>&nbsp;</td>
+        <td colspan="5" id="lammotTeksti_@Html.DisplayFor(modelItem => item.Huone_id)"><pre>Lataa...</pre></td>
     </tr>
 }
 

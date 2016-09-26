@@ -3,16 +3,74 @@
 @{
     ViewBag.Title = "Edit";
 }
+<script src="~/Scripts/jquery-3.1.0.min.js" type="text/javascript"> </script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function lisaaLampo()
+    {
+        var lisaa = document.getElementById("Nykylampotilaeditor");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        var kentta2 = document.getElementById("tavoitelampotila");
+        var label = document.getElementById("tavoitelampotilalabel");
+        //var yks = "1";
+        lisaa.value = tavoitelampotila.value++;
 
+        kentta2.style = "block";
+        label.style = "block";
+    }
+    function saadaLampo(lampo)
+    {
+        alert(lampo);
+        var xhttp;
+        var kentta2 = document.getElementById("tavoitelampotila");
+        var label = document.getElementById("tavoitelampotilalabel");
+        var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
+        if (lampo == "")
+        {
+            //document.getElementById("valinta").inneHTML = "";
+            return;
+            //kentta2.value = DataView.Value;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 2) {
+                kentta2.style = "block";
+                label.style = "block";
+                kentta2.value = lampo;
+                tavoitelampotilaed.value = lampo;
+                tavoitelampotilaed.className = "hidden";
+            }
+        };
+        xhttp.open("GET", "Lampotilats/Edit?q=" + lampo, true);
+        xhttp.send();
+    }
+    </script>
 <h2>Muokkaa</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group-lg">
+           <form action="">
+                    <select name="lampo" onchange="saadaLampo(this.value)">
+                        <option value="">Lämpötilan säätö:</option>
+                        <option value='18' >18</option>
+                        <option value='19'>19</option>
+                        <option value='20'>20</option>
+                        <option value='21'>21</option>
+                        <option value='22'>22</option>
+                        <option value='23'>23</option>
+                        <option value='24'>24</option>
+                        <option value='25'>25</option>
+                    </select>
+                </form>
+
+            </div>
+            <input type="submit" value="Tallenna" class="btn btn-default" />
     
-    <div class="form-horizontal">
-        <h4>Lämpötilat</h4>
+                <h4>Lämpötilat</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Lampotila_id)
@@ -28,15 +86,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NykyLampotila, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NykyLampotila, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.NykyLampotila, new { htmlAttributes = new { @class = "form-control", @id = "Nykylampotilaeditor" } })
                 @Html.ValidationMessageFor(model => model.NykyLampotila, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
+            <button type="button" onclick="lisaaLampo()">Lisää lämpöä</button>
             @Html.LabelFor(model => model.TavoiteLampotila, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TavoiteLampotila, new { htmlAttributes = new { @class = "form-control" } })
+                <b id="tavoitelampotilalabel" style="display:none">Uusi tavoitelämpötila:</b> <br>
+                @Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "tavoitelampotila", @style = "display: none" })
+                @Html.EditorFor(model => model.TavoiteLampotila, new { htmlAttributes = new { @class = "form-control",@id= "tavoitelampotilaeditor" } })
                 @Html.ValidationMessageFor(model => model.TavoiteLampotila, "", new { @class = "text-danger" })
             </div>
         </div>

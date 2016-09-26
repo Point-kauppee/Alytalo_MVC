@@ -7,7 +7,7 @@
       <Diagram DiagramId="04af0ab229b24cd2859ba1469599ecba" Name="Diagram1">
         <EntityTypeShape EntityType="MVC_Alytalo_dbModel.Huoneet" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MVC_Alytalo_dbModel.Kiukaat" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MVC_Alytalo_dbModel.Lampotilat" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVC_Alytalo_dbModel.Lampotilat" Width="1.5" PointX="7" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MVC_Alytalo_dbModel.Valot" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="MVC_Alytalo_dbModel.FK_Kiukaat_Huoneet" ManuallyRouted="false" />
         <AssociationConnector Association="MVC_Alytalo_dbModel.FK_Valot_Huoneet" ManuallyRouted="false" />

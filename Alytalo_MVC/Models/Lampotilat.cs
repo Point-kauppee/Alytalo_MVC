@@ -16,8 +16,8 @@ namespace Alytalo_MVC.Models
     {
         public int Lampotila_id { get; set; }
         public int Huone { get; set; }
-        public Nullable<decimal> NykyLampotila { get; set; }
-        public Nullable<decimal> TavoiteLampotila { get; set; }
+        public Nullable<int> NykyLampotila { get; set; }
+        public Nullable<int> TavoiteLampotila { get; set; }
     
         public virtual Huoneet Huoneet { get; set; }
     }

@@ -28,8 +28,8 @@
           </Key>
           <Property Name="Lampotila_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Huone" Type="int" Nullable="false" />
-          <Property Name="NykyLampotila" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="TavoiteLampotila" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="NykyLampotila" Type="int" />
+          <Property Name="TavoiteLampotila" Type="int" />
         </EntityType>
         <EntityType Name="Valot">
           <Key>
@@ -126,8 +126,8 @@
           </Key>
           <Property Name="Lampotila_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Huone" Type="Int32" Nullable="false" />
-          <Property Name="NykyLampotila" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TavoiteLampotila" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NykyLampotila" Type="Int32" />
+          <Property Name="TavoiteLampotila" Type="Int32" />
           <NavigationProperty Name="Huoneet" Relationship="MVC_Alytalo_dbModel.FK_Lampotilat_Huoneet" FromRole="Lampotilat" ToRole="Huoneet" />
         </EntityType>
         <EntityType Name="Valot">

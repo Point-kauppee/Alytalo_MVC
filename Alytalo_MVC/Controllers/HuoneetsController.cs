@@ -37,11 +37,39 @@ namespace Alytalo_MVC.Controllers
                 //data.Huone = Int32.Parse(valo.Huone);
                 data.Huone = valo.Huone;
                 data.Valaisin = valo.Valaisin;
+                data.ValonTila = valo.ValonTila;
+                data.ValonMaara = valo.ValonMaara;
                 tulos.Add(data);
             }
 
             return Json(tulos, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult HaeLammot(int? id)
+        //public ActionResult HaeValot(string id)
+        {
+            MVC_Alytalo_dbEntities entities = new MVC_Alytalo_dbEntities();
+            List<Lampotilat> lampotilat = (from l in entities.Lampotilat
+                                 where l.Huone == id
+                                 select l).ToList();
+            entities.Dispose();
+
+            List<SimpleLampotilaData> lammot = new List<SimpleLampotilaData>();
+            foreach (Lampotilat lampotila in lampotilat)
+            {
+                SimpleLampotilaData data = new SimpleLampotilaData();
+                data.Lampotila_id = lampotila.Lampotila_id;
+                //data.Huone = Int32.Parse(valo.Huone);
+                data.Huone = lampotila.Huone;
+                data.NykyLampotila = lampotila.NykyLampotila;
+                data.TavoiteLampotila = lampotila.TavoiteLampotila;
+                lammot.Add(data);
+            }
+
+            return Json(lammot, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         // GET: Huoneets/Details/5
         public ActionResult Details(int? id)

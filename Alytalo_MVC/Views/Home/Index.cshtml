@@ -1,19 +1,123 @@
-﻿@{
+﻿@model IEnumerable<Alytalo_MVC.Models.Valot>
+@{
     ViewBag.Title = "Älytalo";
 }
+<script src="~/Scripts/jquery-3.1.0.min.js" type="text/javascript"> </script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<link href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-ui-1.10.4.custom.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function näytäValotPäällä() {
+        var task = document.getElementById('task').value;
+        alert("Painettu");
+        url = "/home/HaePaallaValot/" + "&ValonTila" + task;
+        alert(url);
+        alert(task);
+        }
+    function Tyhjennä() {
+        $("#valolista").empty();
+    }
 
-
-
-<div class="jumbotron">
+    $(function(){
+        $("#etsiTeksti").autocomplete({
+        source : '@Url.Action("HaeppaValot")'
+        });
+    });
+</script>
+<div class="jumbotron" style="font-family:Arial">
     <h1>Älytalo</h1>
+
+@using (@Html.BeginForm())
+{
+    <b>Valaisin:</b>
+    @Html.TextBox("etsiTermi",null, new{ id = "etsiTeksti"})
+    <input type="submit" value="Etsi" />
+}
+
+@Ajax.ActionLink("Talon kaikki valot", "All", new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "valolista",
+    InsertionMode = InsertionMode.Replace,
+    OnBegin= "Tyhjennä"
+    //InsertionMode = InsertionMode.InsertBefore
+})
+   
+    <b> |</b>
+@Ajax.ActionLink("Päällä olevat valot", "HaeValot", new AjaxOptions
+{
+    HttpMethod = "GET",
+    //UpdateTargetId = "valotpaalla",
+    UpdateTargetId = "valolista",
+    InsertionMode = InsertionMode.Replace,
+    OnBegin = "Tyhjennä"
+    //InsertionMode = InsertionMode.InsertBefore
+})
+
     <p class="lead">Tämä on MVC tekniikalla tehty responsiivinen Internet sovellus, jolla voi ohjata netin kautta talon tekniikkaa ja tallentaa arvot Azuressa olevaan tietokantaan.</p>
+    @*<p><a href="/huoneets" class="btn btn-primary btn-lg">Huoneet &raquo;</a></p>*@
+    <p><button type="button" onclick="näytäValotPäällä()">Päälläs olevat valot</button></p>
+    <br/>
     <p><a href="/huoneets" class="btn btn-primary btn-lg">Huoneet &raquo;</a></p>
-    <p> Testi teksti</p>
+    <input type="button" value="Päällä olevat valot" onclick="location.href='@Url.Action("HaeValot", "")'" />
+  @*  <p> <a id="näytäValotPäällä" class="btn-primary">Päällä olevat valot&raquo;</a>*@
+    <p><input id="task" /></p>
+
+ </div>
+
+<div  Id="valolista" style= "border: 1px solid black; background-color: aqua; width: 50%;"></div>
+
+<div class="col-md-4" Id="valotpaalla" align="right" style="border: 1px solid black; background-color: yellow; width: 50%;"></div>
+
+<div style="font-family:Arial">
+    <table border="1">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Valo_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valaisin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValonTila)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValonMaara)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valo_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valaisin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValonTila)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValonMaara)
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
+<div class="row">
 
+@*<div class="col-md-4">*@
 
-
-    <div class="row">
+        <div class="col-md-4">
+            <h2>huoneiden hallinta</h2>
+            <p>
+                Tästä pääset suoraan huoneiden hallintaan.
+            </p>
+            <p><a class="btn btn-default" href="/huoneets">Huoneet &raquo;</a></p>
+        </div>
         <div class="col-md-4">
             <h2>Valojen hallinta</h2>
             <p>
