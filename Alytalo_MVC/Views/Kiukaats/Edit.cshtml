@@ -3,21 +3,167 @@
 @{
     ViewBag.Title = "Edit";
 }
+<script src="~/Scripts/jquery-3.1.0.min.js" type="text/javascript"> </script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+@*<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-switch.css" rel="stylesheet">
+<script src="jquery.js"></script>
+<script src="bootstrap-switch.js"></script>*@
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript">
+    //$(document).ready(function () {
+      
+    //        //alert("Moi");
+    //        window.onload = function () {
+    //            tarkista();
+    //        };
 
+    //});
+
+    function tarkista() {
+        var kentta = document.getElementById("kiuakaantila");
+        var kentta2 = document.getElementById("papo");
+
+        if (kentta.value == 0) {
+            alert(kentta.value);
+            kentta2.checked= false;
+        }
+        else {
+            alert(kentta.value);
+            kentta2.checked=true;
+        }
+    }
+
+    function paalletaipois(paallepois)
+    {
+        var kentta = document.getElementById("kiukaantila");
+        var kentta2 = document.getElementById("papo");
+        var lisaa = document.getElementById("nykylampotilaeditor");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        var tavoitelampotilaeditor = document.getElementById("tavoitelampotilaeditor");
+        var nykylampotila = document.getElementById("nykylampotila");
+
+        if (kentta.value == 0) {
+            kentta2.checked = true;
+            kentta.value = 1;
+            //nykylampotilaeditor.value = tavoitelampotilaeditor.value;
+            //nykylampotila.value = tavoitelampotilaeditor.value;
+            //lisaa.className = "hidden";
+            //tavoitelampotilaeditor.className = "hidden";
+            nykylampotila.style = "block";
+            tavoitelampotila.style = "block";
+            //alert("Päälle");
+        }
+        else
+        {
+            kentta2.checked = false;
+            kentta.value = 0;
+            lisaa.value = 0;
+            tavoitelampotila.value = 0;
+            nykylampotila.value = 0;
+            //lisaa.className = "hidden";
+            //tavoitelampotilaeditor.className = "hidden";
+            nykylampotila.style = "block";
+            tavoitelampotila.style = "block";
+            //alert("Pois päältä");
+        }
+
+    }
+
+    function lisaaLampo() {
+        var lisaa = document.getElementById("nykylampotila");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        //var kentta2 = document.getElementById("tavoitelampotila");
+        var label = document.getElementById("tavoitelampotilalabel");
+        var label2 = document.getElementById("uusitavoitelampotilalabel");
+        var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
+        var jemma = tavoitelampotila.value;
+        //lisaa.value = tavoitelampotila.value++;
+        lisaa.value = jemma;
+        tavoitelampotila.value++;
+        tavoitelampotila.style = "block";
+        label.className = "hidden";
+        label2.style = "block";
+        tavoitelampotilaed.className = "hidden";
+    }
+
+
+    function vahennaLampo() {
+        var vahenna = document.getElementById("nykylampotila");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        //var kentta2 = document.getElementById("tavoitelampotila");
+        var label = document.getElementById("tavoitelampotilalabel");
+        var label2 = document.getElementById("uusitavoitelampotilalabel");
+        var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
+        //vahenna.value = tavoitelampotila.value--;
+        var jemma = tavoitelampotila.value;
+        vahenna.value = jemma;
+        tavoitelampotila.value--;
+        tavoitelampotila.style = "block";
+        label.className = "hidden";
+        label2.style = "block";
+        tavoitelampotilaed.className = "hidden";
+    }
+
+    function saadaLampo(lampo) {
+        alert(lampo);
+        var xhttp;
+        var kentta2 = document.getElementById("tavoitelampotila");
+        var label = document.getElementById("tavoitelampotilalabel");
+        var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
+        if (lampo == "") {
+            //document.getElementById("valinta").inneHTML = "";
+            return;
+            //kentta2.value = DataView.Value;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 2) {
+                kentta2.style = "block";
+                label.style = "block";
+                kentta2.value = lampo;
+                tavoitelampotilaed.value = lampo;
+                tavoitelampotilaed.className = "hidden";
+            }
+        };
+        xhttp.open("GET", "Kiukaats/Edit?q=" + lampo, true);
+        xhttp.send();
+    }
+</script>
 <h2>Muokkaa</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
+        <div class="form-group-lg">
+            <form action="">
+                <select name="lampo" onchange="saadaLampo(this.value)">
+                    <option value="">Kiukaan lämpötilan säätö:</option>
+                    <option value='50'>50</option>
+                    <option value='55'>55</option>
+                    <option value='60'>60</option>
+                    <option value='65'>65</option>
+                    <option value='70'>70</option>
+                    <option value='75'>75</option>
+                    <option value='80'>80</option>
+                    <option value='85'>85</option>
+                </select>
+            </form>
+
+        </div>
         <h4>Kiukaat</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Kiuas_id)
-
-        <div class="form-group">
+        <input type="submit" value="Tallenna" class="btn btn-default" />
+        <input type="checkbox" name="paallepois"  id= "papo" data-toggle="toggle" onchange="paalletaipois(this.value)" class="paalle">
+        @*@Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "kiukaantila", @style = "display: none" })*@
+        @Html.TextBoxFor(model => model.KiukaanTila, new { @id = "kiukaantila" })
+          <div class="form-group">
             @Html.LabelFor(model => model.Huone, "Huone", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control" })
@@ -28,7 +174,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.KiukaanTila, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.KiukaanTila, new { htmlAttributes = new { @class = "form-control" } })
+                <b id="tilalabel" style="display:none"> Uusi tila:  </b> <br>
+                @Html.TextBoxFor(model => model.KiukaanTila, new { @id = "kiuas", @style = "display: none" })
+                @Html.EditorFor(model => model.KiukaanTila, new { htmlAttributes = new { @class = "form-control" , @id="kiuastila"} })
                 @Html.ValidationMessageFor(model => model.KiukaanTila, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,15 +184,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NykyLampotila, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NykyLampotila, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.NykyLampotila, new { @id = "nykylampotila", @style = "display: none" })
+                @Html.EditorFor(model => model.NykyLampotila, new { htmlAttributes = new { @class = "form-control", @id = "nykylampotilaeditor" } })
                 @Html.ValidationMessageFor(model => model.NykyLampotila, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TavoiteLampotila, htmlAttributes: new { @class = "control-label col-md-2" })
+            <button type="button" onclick="lisaaLampo()">Lisää lämpöä</button>
+            <button type="button" onclick="vahennaLampo()">Vähennä lämpöä</button>
+            <br />
+            @Html.LabelFor(model => model.TavoiteLampotila, htmlAttributes: new { @class = "control-label col-md-2", @id="tavoitelampotilalabel" })
+            <b id="uusitavoitelampotilalabel" style="display:none">Uusi tavoitelämpötila:</b> <br>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TavoiteLampotila, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "tavoitelampotila", @style = "display: none" })
+                @Html.EditorFor(model => model.TavoiteLampotila, new { htmlAttributes = new { @class = "form-control", @id = "tavoitelampotilaeditor" } })
                 @Html.ValidationMessageFor(model => model.TavoiteLampotila, "", new { @class = "text-danger" })
             </div>
         </div>

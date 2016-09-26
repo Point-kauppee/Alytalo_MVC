@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.Huoneet.Huone)
         </td>
         <td>
-            @Html.ActionLink("Muokkaa", "Edit", new { id=item.Valo_id }) |
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.Valo_id }, new { @class = "btn btn-primary" }) @*|
             @Html.ActionLink("Tiedot", "Details", new { id=item.Valo_id }) |
-            @Html.ActionLink("Poista", "Delete", new { id=item.Valo_id })
+            @Html.ActionLink("Poista", "Delete", new { id=item.Valo_id })*@
         </td>
     </tr>
 }
