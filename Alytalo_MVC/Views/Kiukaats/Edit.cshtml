@@ -18,117 +18,149 @@
     //        window.onload = function () {
     //            tarkista();
     //        };
-
     //});
-
-    function tarkista() {
-        var kentta = document.getElementById("kiuakaantila");
-        var kentta2 = document.getElementById("papo");
-
-        if (kentta.value == 0) {
-            alert(kentta.value);
-            kentta2.checked= false;
+    function kiukaanLammitys() {
+        var nykylampotila = document.getElementById("nykylampotila");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        var nykylampotilaeditor = document.getElementById("nykylampotilaeditor");
+        var tavoitelampotilaeditor = document.getElementById("tavoitelampotilaeditor");
+        //alert(nykylampotila.value);
+        //alert(tavoitelampotila.value);
+        if (nykylampotila.value < tavoitelampotila.value) {
+            do {
+                
+                setTimeout("kiukaanLammitys()", 1000);
+                tavoitelampotilaeditor.className = "hidden";
+                nykylampotilaeditor.className = "hidden";
+                nykylampotila.style = "block";
+                tavoitelampotila.style = "block";
+            } while (nykylampotila.value == tavoitelampotila.value)
+            nykylampotila.value++;
         }
         else {
-            alert(kentta.value);
-            kentta2.checked=true;
+            alert("Kiuas on nyt haluamasi lämpöinen");
+            return;
+        }
+    }
+
+
+    function tarkista() {
+        var kiuakaantila = document.getElementById("kiuakaantila");
+        var papo = document.getElementById("papo");
+
+        if (kiuakaantila.value == 0) {
+            alert(kiuakaantila.value);
+            papo.checked = false;
+        }
+        else {
+            alert(kiuakaantila.value);
+            papo.checked = true;
         }
     }
 
     function paalletaipois(paallepois)
     {
-        var kentta = document.getElementById("kiukaantila");
-        var kentta2 = document.getElementById("papo");
-        var lisaa = document.getElementById("nykylampotilaeditor");
+        var kiukaantila = document.getElementById("kiukaantila");
+        var papo = document.getElementById("papo");
+        var nykylampotilaeditor = document.getElementById("nykylampotilaeditor");
         var tavoitelampotila = document.getElementById("tavoitelampotila");
         var tavoitelampotilaeditor = document.getElementById("tavoitelampotilaeditor");
         var nykylampotila = document.getElementById("nykylampotila");
+        var kiuas = document.getElementById("kiuas");
+        var kiuastila = document.getElementById("kiuastila");
 
-        if (kentta.value == 0) {
-            kentta2.checked = true;
-            kentta.value = 1;
-            //nykylampotilaeditor.value = tavoitelampotilaeditor.value;
-            //nykylampotila.value = tavoitelampotilaeditor.value;
-            //lisaa.className = "hidden";
-            //tavoitelampotilaeditor.className = "hidden";
+        if (kiukaantila.value == 0) {
+            papo.checked = true;
+            kiukaantila.value = 1;
+            kiuas.value = 1;
+            tavoitelampotilaeditor.className = "hidden";
+            nykylampotilaeditor.className = "hidden";
             nykylampotila.style = "block";
             tavoitelampotila.style = "block";
+            kiuas.style = "block";
+            kiuastila.className = "hidden";
             //alert("Päälle");
         }
         else
         {
-            kentta2.checked = false;
-            kentta.value = 0;
-            lisaa.value = 0;
-            tavoitelampotila.value = 0;
-            nykylampotila.value = 0;
-            //lisaa.className = "hidden";
-            //tavoitelampotilaeditor.className = "hidden";
+            papo.checked = false;
+            kiukaantila.value = 0;
+            kiuas.value = 0;
+            nykylampotilaeditor.value = 15;
+            tavoitelampotila.value = 15;
+            nykylampotila.value = 15;
+            tavoitelampotilaeditor.className = "hidden";
+            nykylampotilaeditor.className = "hidden";
             nykylampotila.style = "block";
             tavoitelampotila.style = "block";
+            kiuas.style = "block";
+            kiuastila.className = "hidden";
             //alert("Pois päältä");
         }
 
     }
 
     function lisaaLampo() {
-        var lisaa = document.getElementById("nykylampotila");
+        var nykylampotila = document.getElementById("nykylampotila");
+        var nykylampotilaeditor = document.getElementById("nykylampotilaeditor");
         var tavoitelampotila = document.getElementById("tavoitelampotila");
-        //var kentta2 = document.getElementById("tavoitelampotila");
-        var label = document.getElementById("tavoitelampotilalabel");
-        var label2 = document.getElementById("uusitavoitelampotilalabel");
+        var tavoitelampotilalabel = document.getElementById("tavoitelampotilalabel");
+        var uusitavoitelampotilalabel = document.getElementById("uusitavoitelampotilalabel");
         var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
-        var jemma = tavoitelampotila.value;
-        //lisaa.value = tavoitelampotila.value++;
-        lisaa.value = jemma;
         tavoitelampotila.value++;
         tavoitelampotila.style = "block";
-        label.className = "hidden";
-        label2.style = "block";
-        tavoitelampotilaed.className = "hidden";
+        tavoitelampotilaeditor.className = "hidden";
+        tavoitelampotilalabel.className = "hidden";
+        uusitavoitelampotilalabel.style = "block";
+        nykylampotila.style = "block";
+        nykylampotilaeditor.className = "hidden";
     }
 
 
     function vahennaLampo() {
-        var vahenna = document.getElementById("nykylampotila");
+        var nykylampotila = document.getElementById("nykylampotila");
+        var nykylampotilaeditor = document.getElementById("nykylampotilaeditor");
         var tavoitelampotila = document.getElementById("tavoitelampotila");
-        //var kentta2 = document.getElementById("tavoitelampotila");
-        var label = document.getElementById("tavoitelampotilalabel");
-        var label2 = document.getElementById("uusitavoitelampotilalabel");
+        var tavoitelampotilalabel = document.getElementById("tavoitelampotilalabel");
+        var uusitavoitelampotilalabel = document.getElementById("uusitavoitelampotilalabel");
         var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
-        //vahenna.value = tavoitelampotila.value--;
-        var jemma = tavoitelampotila.value;
-        vahenna.value = jemma;
         tavoitelampotila.value--;
         tavoitelampotila.style = "block";
-        label.className = "hidden";
-        label2.style = "block";
-        tavoitelampotilaed.className = "hidden";
+        tavoitelampotilaeditor.className = "hidden";
+        tavoitelampotilalabel.className = "hidden";
+        uusitavoitelampotilalabel.style = "block";
+        nykylampotila.style = "block";
+        nykylampotilaeditor.className = "hidden";
     }
 
     function saadaLampo(lampo) {
         alert(lampo);
         var xhttp;
-        var kentta2 = document.getElementById("tavoitelampotila");
-        var label = document.getElementById("tavoitelampotilalabel");
-        var tavoitelampotilaed = document.getElementById("tavoitelampotilaeditor");
+        var tavoitelampotila = document.getElementById("tavoitelampotila");
+        var tavoitelampotilalabel = document.getElementById("tavoitelampotilalabel");
+        var tavoitelampotilaeditor = document.getElementById("tavoitelampotilaeditor");
+        var nykylampotila = document.getElementById("nykylampotila");
+        var nykylampotilaeditor = document.getElementById("nykylampotilaeditor");
         if (lampo == "") {
-            //document.getElementById("valinta").inneHTML = "";
             return;
-            //kentta2.value = DataView.Value;
         }
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 2) {
-                kentta2.style = "block";
-                label.style = "block";
-                kentta2.value = lampo;
-                tavoitelampotilaed.value = lampo;
-                tavoitelampotilaed.className = "hidden";
+                tavoitelampotila.style = "block";
+                tavoitelampotilalabel.style = "block";
+                tavoitelampotila.value = lampo;
+                tavoitelampotilaeditor.value = lampo;
+                tavoitelampotilaeditor.className = "hidden";
+                nykylampotila.style = "block";
+                nykylampotilaeditor.className = "hidden";
+                tavoitelampotilalabel.className = "hidden";
+                uusitavoitelampotilalabel.style = "block";
             }
         };
         xhttp.open("GET", "Kiukaats/Edit?q=" + lampo, true);
         xhttp.send();
+
     }
 </script>
 <h2>Muokkaa</h2>
@@ -141,7 +173,7 @@
     <div class="form-horizontal">
         <div class="form-group-lg">
             <form action="">
-                <select name="lampo" onchange="saadaLampo(this.value)">
+                <select name="lampo" onchange="saadaLampo(this.value)" >
                     <option value="">Kiukaan lämpötilan säätö:</option>
                     <option value='50'>50</option>
                     <option value='55'>55</option>
@@ -153,7 +185,7 @@
                     <option value='85'>85</option>
                 </select>
             </form>
-
+            <button type="button" onclick="kiukaanLammitys()">Lämmön säätö</button>
         </div>
         <h4>Kiukaat</h4>
         <hr />
@@ -162,12 +194,13 @@
         <input type="submit" value="Tallenna" class="btn btn-default" />
         <input type="checkbox" name="paallepois"  id= "papo" data-toggle="toggle" onchange="paalletaipois(this.value)" class="paalle">
         @*@Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "kiukaantila", @style = "display: none" })*@
-        @Html.TextBoxFor(model => model.KiukaanTila, new { @id = "kiukaantila" })
+        @Html.TextBoxFor(model => model.KiukaanTila, new { @id = "kiukaantila", @style = "display: none" })
           <div class="form-group">
             @Html.LabelFor(model => model.Huone, "Huone", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Huone, "", new { @class = "text-danger" })
+               @* @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })*@
+                @Html.DropDownList("Huone", null, htmlAttributes: new { @class = "form-control"})
+                  @Html.ValidationMessageFor(model => model.Huone, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -197,6 +230,7 @@
             @Html.LabelFor(model => model.TavoiteLampotila, htmlAttributes: new { @class = "control-label col-md-2", @id="tavoitelampotilalabel" })
             <b id="uusitavoitelampotilalabel" style="display:none">Uusi tavoitelämpötila:</b> <br>
             <div class="col-md-10">
+                @*@Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "tavoitelampotila", @style = "display: none" })*@
                 @Html.TextBoxFor(model => model.TavoiteLampotila, new { @id = "tavoitelampotila", @style = "display: none" })
                 @Html.EditorFor(model => model.TavoiteLampotila, new { htmlAttributes = new { @class = "form-control", @id = "tavoitelampotilaeditor" } })
                 @Html.ValidationMessageFor(model => model.TavoiteLampotila, "", new { @class = "text-danger" })
